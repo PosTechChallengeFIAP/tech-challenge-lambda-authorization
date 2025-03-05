@@ -1,3 +1,3 @@
-import { PaymentLambda } from './payment-lambda'
+import { OrderLambda } from './order-lambda'
 
-export const handler = PaymentLambda.handler
+export const handler = OrderLambda.handler
