@@ -1,5 +1,5 @@
 {
-  "name": "tech-challenge-lambda-order",
+  "name": "tech-challenge-lambda-authorization",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.147",
+    "@types/jsonwebtoken": "^9.0.9",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
   }
 }

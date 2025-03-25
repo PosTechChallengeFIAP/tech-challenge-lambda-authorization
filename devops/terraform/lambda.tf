@@ -5,9 +5,4 @@ resource "aws_lambda_function" "authorization_lambda" {
   role             = data.aws_iam_role.default.arn
   handler          = "dist/index.handler"
   runtime          = "nodejs18.x"
-  
-  # environment {
-  #   variables = {
-  #   }
-  # }
 }
