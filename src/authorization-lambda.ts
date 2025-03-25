@@ -38,17 +38,25 @@ export class AuthorizationLambda {
                 return false;
             }
         }
-        console.log("Event:", event);
-        const token = event.headers?.authorization?.replace("Bearer ", "");
-        console.log("Token:", token);
 
-        if (!token) {
-            throw new Error("Unauthorized: No token provided");
-        }
-
-        const isValid = await validateToken(token);
-        if (!isValid) {
-            throw new Error("Unauthorized: Invalid token");
+        try {
+            console.log("Event:", event);
+            const token = event.headers?.authorization?.replace("Bearer ", "");
+            console.log("Token:", token);
+    
+            if (!token) {
+                throw new Error("Unauthorized: No token provided");
+            }
+    
+            const isValid = await validateToken(token);
+            if (!isValid) {
+                throw new Error("Unauthorized: Invalid token");
+            }
+        } catch (error: any) {
+           return {
+                isAuthorized: false,
+                errorMessage: error?.message || 'Unauthorized',
+           }
         }
 
         return {
