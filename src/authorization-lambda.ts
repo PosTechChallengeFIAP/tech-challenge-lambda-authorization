@@ -11,8 +11,9 @@ export class AuthorizationLambda {
                 }
                 
                 const issuer = decodedToken.payload.iss;
+                console.log("Issuer:", issuer);
                 if (!issuer) {
-                throw new Error("Issuer not found in token");
+                    throw new Error("Issuer not found in token");
                 }
 
                 const response = await fetch(`${issuer}/.well-known/jwks.json`);
