@@ -1,4 +1,4 @@
-import { APIGatewayAuthorizerResultContext, APIGatewayRequestAuthorizerEvent, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
+import { APIGatewayAuthorizerResultContext, APIGatewayRequestAuthorizerEvent } from "aws-lambda";
 import * as jwt from "jsonwebtoken";
 import * as jwkToPem from "jwk-to-pem";
 
@@ -39,7 +39,8 @@ export class AuthorizationLambda {
             }
         }
         console.log("Event:", event);
-        const token = event.headers?.Authorization?.replace("Bearer ", "");
+        const token = event.headers?.authorization?.replace("Bearer ", "");
+        console.log("Token:", token);
 
         if (!token) {
             throw new Error("Unauthorized: No token provided");
