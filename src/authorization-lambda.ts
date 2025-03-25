@@ -1,5 +1,6 @@
 import { APIGatewayAuthorizerResultContext, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
 import * as jwt from "jsonwebtoken";
+import * as jwkToPem from "jwk-to-pem";
 
 export class AuthorizationLambda {
     static async handler(event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResultContext> {
@@ -24,9 +25,11 @@ export class AuthorizationLambda {
                 if (!key) {
                     throw new Error("Key not found");
                 }
+                console.log("Encontrou a Key:", key);
             
-                const publicKey = `-----BEGIN CERTIFICATE-----\n${key.x5c[0]}\n-----END CERTIFICATE-----`;
+                const publicKey = jwkToPem(key);
             
+                console.log("Teste", token, publicKey, issuer);
                 jwt.verify(token, publicKey, { algorithms: ["RS256"], issuer: issuer });
             
                 return true;
