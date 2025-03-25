@@ -1,8 +1,8 @@
-import { APIGatewayAuthorizerResult, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
+import { APIGatewayAuthorizerResultContext, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
 import * as jwt from "jsonwebtoken";
 
 export class AuthorizationLambda {
-    static async handler(event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResult> {
+    static async handler(event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResultContext> {
         async function validateToken(token: string): Promise<boolean> {
             try {
                 const decodedToken = jwt.decode(token, { complete: true });
@@ -46,17 +46,7 @@ export class AuthorizationLambda {
         }
 
         return {
-            principalId: "user",
-            policyDocument: {
-                Version: "2025-03-25",
-                Statement: [
-                    {
-                        Action: "execute-api:Invoke",
-                        Effect: "Allow",
-                        Resource: event.methodArn,
-                    },
-                ],
-            },
+            isAuthorized: true,
         };
     }
 }
