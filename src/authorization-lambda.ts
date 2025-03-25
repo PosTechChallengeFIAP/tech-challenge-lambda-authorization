@@ -1,9 +1,9 @@
-import { APIGatewayAuthorizerResultContext, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
+import { APIGatewayAuthorizerResultContext, APIGatewayRequestAuthorizerEvent, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
 import * as jwt from "jsonwebtoken";
 import * as jwkToPem from "jwk-to-pem";
 
 export class AuthorizationLambda {
-    static async handler(event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResultContext> {
+    static async handler(event: APIGatewayRequestAuthorizerEvent): Promise<APIGatewayAuthorizerResultContext> {
         async function validateToken(token: string): Promise<boolean> {
             try {
                 const decodedToken = jwt.decode(token, { complete: true });
@@ -39,7 +39,7 @@ export class AuthorizationLambda {
             }
         }
         console.log("Event:", event);
-        const token = event.authorizationToken?.replace("Bearer ", "");
+        const token = event.headers?.Authorization?.replace("Bearer ", "");
 
         if (!token) {
             throw new Error("Unauthorized: No token provided");
