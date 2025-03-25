@@ -17,8 +17,9 @@ export class AuthorizationLambda {
                 }
 
                 const response = await fetch(`${issuer}/.well-known/jwks.json`);
+                console.log("JWKS response:", response.status);
                 const { keys } = await response.json();
-            
+                console.log("Keys:", keys);
                 const key = keys.find((k: any) => k.kid === decodedToken.header.kid);
                 if (!key) {
                     throw new Error("Key not found");
