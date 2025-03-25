@@ -1,3 +1,3 @@
-import { OrderLambda } from './order-lambda'
+import { AuthorizationLambda } from './authorization-lambda'
 
-export const handler = OrderLambda.handler
+export const handler = AuthorizationLambda.handler
