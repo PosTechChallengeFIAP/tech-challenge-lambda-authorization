@@ -38,7 +38,7 @@ export class AuthorizationLambda {
                 return false;
             }
         }
-
+        console.log("Event:", event);
         const token = event.authorizationToken?.replace("Bearer ", "");
 
         if (!token) {
